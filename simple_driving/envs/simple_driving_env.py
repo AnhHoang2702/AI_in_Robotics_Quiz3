@@ -80,12 +80,19 @@ class SimpleDrivingEnv(gym.Env):
         self.prev_dist_to_goal = dist_to_goal
 
         # Done by reaching goal
-        terminated = dist_to_goal < 1.5 and not self.reached_goal
-        truncated = self._envStepCounter > 2000  # Time limit reached
-        self.reached_goal = terminated  # Track goal completion
+        if dist_to_goal < 1.5 and not self.reached_goal:
+            #print("reached goal")
+            self.done = True
+            self.reached_goal = True
 
         ob = car_ob
-        return ob, reward, terminated, truncated, {}  # Now returns the correct format
+        return ob, reward, self.done, dict()        if dist_to_goal < 1.5 and not self.reached_goal:
+            #print("reached goal")
+            self.done = True
+            self.reached_goal = True
+
+        ob = car_ob
+        return ob, reward, self.done, dict()
 
     def seed(self, seed=None):
         self.np_random, seed = gym.utils.seeding.np_random(seed)
