@@ -23,8 +23,8 @@ class SimpleDrivingEnv(gym.Env):
                 low=np.array([-1, -.6], dtype=np.float32),
                 high=np.array([1, .6], dtype=np.float32))
         self.observation_space = gym.spaces.box.Box(
-            low=np.array([-20, -20], dtype=np.float32),
-            high=np.array([20, 20], dtype=np.float32))
+            low=np.array([-40, -40], dtype=np.float32),
+            high=np.array([40, 40], dtype=np.float32))
         self.np_random, _ = gym.utils.seeding.np_random()
 
         if renders:
@@ -187,7 +187,7 @@ class SimpleDrivingEnv(gym.Env):
         return observation
 
     def _termination(self):
-        return self._envStepCounter > 2000
+        return self._envStepCounter > 4000
 
     def close(self):
         self._p.disconnect()
